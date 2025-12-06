@@ -61,7 +61,7 @@ class reflection_port(circlefit, save_load, plotting, calibration):
 			f = splrep(f_data,np.unwrap(np.angle(z_data)),k=5,s=self.phasefitsmooth)
 			fr = f_data[np.argmax(np.absolute(splev(f_data,f,der=1)))]
 			Ql = 1e4
-		if ignoreslope==True:
+		if ignoreslope is True:
 			A2 = 0.
 		else:
 			A2 = 0.
@@ -71,7 +71,7 @@ class reflection_port(circlefit, save_load, plotting, calibration):
 			print("However, make sure to understand the impact of the baseline (parasitic coupled resonances etc.) on your system.")
 			#z_data = (np.absolute(z_data)-A2*(f_data-fr)) * np.exp(np.angle(z_data)*1j)  #usually not necessary
 		if delay is None:
-			if guess==True:
+			if guess is True:
 				delay = self._guess_delay(f_data,z_data)
 			else:
 				delay=0.
@@ -124,7 +124,7 @@ class reflection_port(circlefit, save_load, plotting, calibration):
 		#calculation of the error
 		p = [fr,Qc,Ql]
 		#chi_square, errors = rt.get_errors(rt.residuals_notch_ideal,f_data,z_data,p)
-		if calc_errors==True:
+		if calc_errors is True:
 			chi_square, cov = self._get_cov_fast_directrefl(f_data,z_data,p)
 			#chi_square, cov = rt.get_cov(rt.residuals_notch_ideal,f_data,z_data,p)
 
@@ -302,7 +302,7 @@ class notch_port(circlefit, save_load, plotting, calibration):
 		maxval = np.max(np.absolute(z_data))
 		z_data = z_data/maxval
 		A1, A2, A3, A4, fr, Ql = self._fit_skewed_lorentzian(f_data,z_data)
-		if ignoreslope==True:
+		if ignoreslope is True:
 			A2 = 0.
 		else:
 			A2 = 0.
@@ -312,7 +312,7 @@ class notch_port(circlefit, save_load, plotting, calibration):
 			print("However, make sure to understand the impact of the baseline (parasitic coupled resonances etc.) on your system.")
 			#z_data = (np.absolute(z_data)-A2*(f_data-fr)) * np.exp(np.angle(z_data)*1j)  #usually not necessary
 		if delay is None:
-			if guess==True:
+			if guess is True:
 				delay = self._guess_delay(f_data,z_data)
 			else:
 				delay=0.
@@ -386,7 +386,7 @@ class notch_port(circlefit, save_load, plotting, calibration):
 		#calculation of the error
 		p = [fr,absQc,Ql,phi0]
 		#chi_square, errors = rt.get_errors(rt.residuals_notch_ideal,f_data,z_data,p)
-		if calc_errors==True:
+		if calc_errors is True:
 			chi_square, cov = self._get_cov_fast_notch(f_data,z_data,p)
 			#chi_square, cov = rt.get_cov(rt.residuals_notch_ideal,f_data,z_data,p)
 
