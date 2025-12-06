@@ -106,11 +106,5 @@ class calibration(object):
 		sSmooth.on_changed(update)
 		sAsym.on_changed(update)
 		sbcorr.on_changed(update)
-		plt.show()
+		plt.show(block=True)
 		self.z_data_raw /= self.__baseline
-		plt.close()
-		
-		
-		
-		
-		
