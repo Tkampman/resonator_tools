@@ -89,9 +89,9 @@ class calibration(object):
 		ax0.set_ylabel('amp, rawdata vs. baseline')
 		ax1.set_ylabel('amp, corrected')
 		axcolor = 'lightgoldenrodyellow'
-		axSmooth = plt.axes([0.25, 0.1, 0.65, 0.03], axisbg=axcolor)
-		axAsym = plt.axes([0.25, 0.15, 0.65, 0.03], axisbg=axcolor)
-		axbcorr = plt.axes([0.25, 0.05, 0.65, 0.03], axisbg=axcolor)
+		axSmooth = plt.axes([0.25, 0.1, 0.65, 0.03], facecolor=axcolor)
+		axAsym = plt.axes([0.25, 0.15, 0.65, 0.03], facecolor=axcolor)
+		axbcorr = plt.axes([0.25, 0.05, 0.65, 0.03], facecolor=axcolor)
 		sSmooth = Slider(axSmooth, 'Smoothness', 0.1, 10., valinit=np.log10(self.__lam),valfmt='1E%f')
 		sAsym = Slider(axAsym, 'Asymmetry', 1e-4,0.99999, valinit=self.__p,valfmt='%f')
 		sbcorr = Slider(axbcorr, 'vertical shift',0.7,1.1,valinit=1.)
