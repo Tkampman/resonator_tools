@@ -427,6 +427,12 @@ def extract_physics_from_general(f0, Ql, A, B, D):
         'Qi': Qi, 'kappa': kappa
     }
 
+def calculate_rms(freq, S11_data, S11_model):
+    """Calculate RMS residual between data and model."""
+    diff = S11_data - S11_model
+    return np.sqrt(np.mean(np.abs(diff)**2))
+
+
 def calculate_fit_errors(freq, S11_data, params, res_result):
     """Local uncertainty estimate from the Jacobian."""
     try:
@@ -814,11 +820,36 @@ if __name__ == "__main__":
         params['a'] = sliders['a'].val
         params['alpha'] = np.deg2rad(sliders['alpha'].val)
         
+        # Calculate RMS for current slider values
+        freq_crop, S11_crop = get_cropped_data()
+        S11_model = model_S11_with_bg(
+            freq_crop,
+            params['f0'], params['Ql'], params['Qc_abs'], params['phi0'],
+            params['tau'], params['a'], params['alpha'],
+            bg_state["bg"]
+        )
+        rms = calculate_rms(freq_crop, S11_crop, S11_model)
+        param_errors['rms'] = rms
+        
         update_display()
         update_info()
         fig.canvas.draw_idle()
 
     def on_crop_change(val=None):
+        crop_state['left'] = slider_crop_left.val
+        crop_state['right'] = slider_crop_right.val
+        
+        # Recalculate RMS for new crop region
+        freq_crop, S11_crop = get_cropped_data()
+        S11_model = model_S11_with_bg(
+            freq_crop,
+            params['f0'], params['Ql'], params['Qc_abs'], params['phi0'],
+            params['tau'], params['a'], params['alpha'],
+            bg_state["bg"]
+        )
+        rms = calculate_rms(freq_crop, S11_crop, S11_model)
+        param_errors['rms'] = rms
+        
         update_display()
         update_info()
         fig.canvas.draw_idle()
